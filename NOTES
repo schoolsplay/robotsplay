@@ -1,0 +1,4 @@
+To get code completion and more goodies working in pycharm open the settings menu
+and add the python-ev3 git repo as content-root.
+Settings -> project structure -> add content root.
+
