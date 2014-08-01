@@ -1,7 +1,13 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+"""
+Place this script in /etc/network/if-up.d
+and make sure it's executable (chmod a+x)
+"""
+
 from PIL import ImageFont
 import subprocess
-import time
 
 __author__ = 'stas Zytkiewicz stas@childsplay.mobi'
 
