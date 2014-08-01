@@ -10,7 +10,7 @@ __author__ = 'stas Zytkiewicz stas@childsplay.mobi'
 class EVEMotor(Motor):
     def __init__(self, port='A'):
         """
-        Adds some extra metods to the base ev3 Motor class
+        Adds some extra methods to the base ev3 Motor class
         :param port: post to which this motor is connected.
                      possible values: 'A', 'B', 'C', 'D'
         :return: instance
@@ -29,7 +29,13 @@ class EVEMotor(Motor):
     def turn_right(self, degrees):
         pass
 
-    def backup(self, speed=200):
+    def run_backward_forever(self, speed=200):
+        pass
+
+    def move_forward_steps(self, steps):
+        pass
+
+    def move_backward_steps(self, steps):
         pass
 
 if __name__ == '__main__':
