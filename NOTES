@@ -3,3 +3,12 @@ and add the python-ev3 git repo as content-root.
 Settings -> project structure -> add content root.
 
 Install pycharm plugin: Source synchronizer
+
+Things todo on your btick in addition to the stuff mentioned in th ev3 wiki
+- Create regular user:
+  # adduser user
+  Also add this user to the sudo group.
+- Set the time on the brick, manually no need to run ntpd:
+  sudo date +%T -s "8:08:00"
+- install the eve ip2lcd script (see docstring inside this module)
+
