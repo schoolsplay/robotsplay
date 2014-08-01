@@ -1,0 +1,2 @@
+Tests should run from within the main tree,
+python test/test_logging.py
