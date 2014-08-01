@@ -29,8 +29,8 @@ class EVEMotor(Motor):
     def turn_right(self, degrees):
         pass
 
-    def run_backward_forever(self, speed=200):
-        pass
+    def run_backward_forever(self, speed, regulation_mode=True):
+        self.run_forever(-speed, regulation_mode=regulation_mode)
 
     def move_forward_steps(self, steps):
         pass
@@ -51,6 +51,13 @@ if __name__ == '__main__':
 
     M1.start()
     M2.start()
+    time.sleep(5)
+
+    M1.stop()
+    M2.stop()
+
+    M1.run_backward_forever(200)
+    M2.run_backward_forever(200)
     time.sleep(5)
 
     M1.stop()
