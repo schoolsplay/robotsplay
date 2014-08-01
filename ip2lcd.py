@@ -10,8 +10,11 @@ and make sure it's executable (chmod a+x)
 
 from PIL import ImageFont
 import subprocess
-
+import time
 __author__ = 'Stas Zytkiewicz stas@childsplay.mobi'
+
+
+time.sleep(10)
 
 from ev3.ev3dev import Lcd
 cmd = subprocess.Popen("/sbin/ifconfig", shell=True,

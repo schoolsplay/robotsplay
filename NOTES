@@ -5,10 +5,16 @@ Settings -> project structure -> add content root.
 Install pycharm plugin: Source synchronizer
 
 Things todo on your btick in addition to the stuff mentioned in th ev3 wiki
+- dpkg-reconfigure tzdata to set the time and date to your locale
+- update-rc.d rmnologin remove
 - Create regular user:
   # adduser user
   Also add this user to the sudo group.
 - Set the time on the brick, manually no need to run ntpd:
   sudo date +%T -s "8:08:00"
 - install the eve ip2lcd script (see docstring inside this module)
+  (it seems that the boot proccess is slower than the network connection so the
+  message from ip2lcd is overwritten by the ev3 default message when the boot is finished.
+  So i included a sleep of 5 seconds.
+
 

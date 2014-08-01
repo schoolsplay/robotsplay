@@ -1,5 +1,6 @@
 import os
 import sys
+sys.path.insert(0, '..')
 
 __author__ = 'stas Zytkiewicz stas@childsplay.mobi'
 
