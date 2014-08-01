@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Place this script in /etc/network/if-up.d
+Place this script in /etc/network/if-up.d as ip2lcd (without the .py part)
 and make sure it's executable (chmod a+x)
 """
 
