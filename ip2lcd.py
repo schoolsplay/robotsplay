@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
+Script to be run after a network device is set up and will display the ip
+number(s) in use.
 Place this script in /etc/network/if-up.d as ip2lcd (without the .py part)
 and make sure it's executable (chmod a+x)
 """
