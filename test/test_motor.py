@@ -19,7 +19,7 @@ class TestSequenceFunctions(unittest.TestCase):
     _M = EVEMotor('A')
 
     def test_00_run_forever(self):
-        result = TestSequenceFunctions._M.run_forever(200)
+        result = TestSequenceFunctions._M.run_forever(200, regulation_mode=True)
         time.sleep(5)
         TestSequenceFunctions._M.stop()
         self.assertFalse(result, "Should be false")

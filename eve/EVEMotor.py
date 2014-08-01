@@ -43,5 +43,15 @@ if __name__ == '__main__':
     EVELogger.set_level('debug')
     EVELogger.start()
 
-    M = EVEMotor()
-    M.run()
+    M1 = EVEMotor()
+    M1.run_forever(200, regulation_mode=True)
+
+    M2 = EVEMotor('B')
+    M2.run_forever(200, regulation_mode=True)
+
+    M1.start()
+    M2.start()
+    time.sleep(5)
+
+    M1.stop()
+    M2.stop()
