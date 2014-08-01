@@ -9,7 +9,7 @@ and make sure it's executable (chmod a+x)
 from PIL import ImageFont
 import subprocess
 
-__author__ = 'stas Zytkiewicz stas@childsplay.mobi'
+__author__ = 'Stas Zytkiewicz stas@childsplay.mobi'
 
 from ev3.ev3dev import Lcd
 cmd = subprocess.Popen("/sbin/ifconfig", shell=True,
