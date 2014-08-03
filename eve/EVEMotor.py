@@ -1,7 +1,9 @@
 """
 Abstract class for the ev3 Motor class
 """
+
 import time
+import thread
 from ev3.ev3dev import Motor
 import logging
 
@@ -22,12 +24,10 @@ class EVEMotor(Motor):
                 'C': Motor.PORT.C,
                 'D': Motor.PORT.D}[port]
         super(EVEMotor, self).__init__(port=port)
+        self.reset()
 
-    def turn_left(self, degrees):
-        pass
-
-    def turn_right(self, degrees):
-        pass
+    def run_forward_forever(self, speed, regulation_mode=True):
+        self.run_forever(speed, regulation_mode=regulation_mode)
 
     def run_backward_forever(self, speed, regulation_mode=True):
         self.run_forever(-speed, regulation_mode=regulation_mode)
@@ -38,11 +38,34 @@ class EVEMotor(Motor):
     def move_backward_steps(self, steps):
         pass
 
-if __name__ == '__main__':
-    import EVELogger
-    EVELogger.set_level('debug')
-    EVELogger.start()
+class Turn(object):
+    def __init__(self, left_moter, right_moter):
+        self.mleft = left_moter
+        self.mright = right_moter
 
+    def right(self, degrees, speed=200):
+        self.mright.reset()
+        self.mleft.reset()
+        self.turn = True
+        thread.start_new(self._check_turn, (self.mleft, degrees * 6,))
+        time.sleep(0.1)
+        self.mleft.run_forever(speed, regulation_mode=True)
+
+
+    def left(self, degrees):
+        self.mleft.reset()
+
+    def _check_turn(self, m, degrees):
+        run = True
+        while run:
+            print [m.position], [degrees]
+            if m.position >= degrees:
+                run = False
+            time.sleep(0.1)
+        m.stop()
+
+
+def test():
     M1 = EVEMotor()
     M1.run_forever(200, regulation_mode=True)
 
@@ -52,9 +75,13 @@ if __name__ == '__main__':
     M1.start()
     M2.start()
     time.sleep(5)
-
     M1.stop()
     M2.stop()
+
+    T = Turn(M1, M2)
+    T.right(180)
+
+    time.sleep(15)
 
     M1.run_backward_forever(200)
     M2.run_backward_forever(200)
@@ -62,3 +89,14 @@ if __name__ == '__main__':
 
     M1.stop()
     M2.stop()
+
+if __name__ == '__main__':
+    import EVELogger
+    EVELogger.set_level('debug')
+    EVELogger.start()
+
+    try:
+        test()
+    except KeyboardInterrupt, info:
+        import EVE3Laws
+

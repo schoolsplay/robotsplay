@@ -13,9 +13,6 @@ import subprocess
 import time
 __author__ = 'Stas Zytkiewicz stas@childsplay.mobi'
 
-
-time.sleep(10)
-
 from ev3.ev3dev import Lcd
 cmd = subprocess.Popen("/sbin/ifconfig", shell=True,
                                    stdout=subprocess.PIPE,
@@ -39,3 +36,4 @@ d.draw.text((0, 25), "USB IP: %s" % usb_ip, font=font)
 d.draw.text((0, 40), "WLAN IP: %s" % wlan_ip, font=font)
 d.update()
 
+time.sleep(10)
