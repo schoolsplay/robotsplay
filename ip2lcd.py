@@ -36,4 +36,3 @@ d.draw.text((0, 25), "USB IP: %s" % usb_ip, font=font)
 d.draw.text((0, 40), "WLAN IP: %s" % wlan_ip, font=font)
 d.update()
 
-time.sleep(10)

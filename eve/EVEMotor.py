@@ -43,7 +43,7 @@ class Turn(object):
         self.mleft = left_moter
         self.mright = right_moter
 
-    def right(self, degrees, speed=200):
+    def rightturn(self, degrees, speed=200):
         self.mright.reset()
         self.mleft.reset()
         self.turn = True
@@ -52,8 +52,14 @@ class Turn(object):
         self.mleft.run_forever(speed, regulation_mode=True)
 
 
-    def left(self, degrees):
+    def left(self, degrees, speed=200):
+        self.mright.reset()
         self.mleft.reset()
+        self.turn = True
+        thread.start_new(self._check_turn, (self.mright, degrees * 6,))
+        time.sleep(0.1)
+        self.mright.run_forever(speed, regulation_mode=True)
+
 
     def _check_turn(self, m, degrees):
         run = True
@@ -79,7 +85,7 @@ def test():
     M2.stop()
 
     T = Turn(M1, M2)
-    T.right(180)
+    T.rightturn(180)
 
     time.sleep(15)
 
