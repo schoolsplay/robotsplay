@@ -9,4 +9,8 @@ It will also hold the programs I will developing for the Lego ev3.
 All the programs will use the 'eve' extensions
 
 
+License
+=======
+
+Everything is licensed under the GPL v3
 
