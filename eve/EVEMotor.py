@@ -3,7 +3,6 @@ Abstract class for the ev3 Motor class
 """
 
 import time
-import thread
 from ev3.ev3dev import Motor
 import logging
 
@@ -17,13 +16,15 @@ class EVEMotor(Motor):
                      possible values: 'A', 'B', 'C', 'D'
         :return: instance
         """
-        self.logger = logging.getLogger('EVE.EVEMotor')
-        self.logger.debug("Using port: %s" % port)
         port = {'A': Motor.PORT.A,
                 'B': Motor.PORT.B,
                 'C': Motor.PORT.C,
                 'D': Motor.PORT.D}[port]
         super(EVEMotor, self).__init__(port=port)
+
+        self.logger = logging.getLogger('EVE.EVEMotor')
+        self.logger.debug("Using port: %s" % port)
+
         self.reset()
 
     def run_forward_forever(self, speed, regulation_mode=True):
@@ -33,10 +34,20 @@ class EVEMotor(Motor):
         self.run_forever(-speed, regulation_mode=regulation_mode)
 
     def move_forward_steps(self, steps):
-        pass
+        self.position = 0
+        self.run_position_limited(position_sp=360 * steps, speed_sp=200,
+                                  stop_mode=Motor.STOP_MODE.BRAKE, ramp_up_sp=100, ramp_down_sp=100)
 
     def move_backward_steps(self, steps):
-        pass
+        """
+        One step is one cycle of the motor (360 degrees)
+        :param steps: integer
+        :return:
+        """
+        self.position = 0
+        self.run_position_limited(position_sp=360 * steps, speed_sp=-200,
+                                  stop_mode=Motor.STOP_MODE.BRAKE, ramp_up_sp=100, ramp_down_sp=100)
+
 
 class Turn(object):
     def __init__(self, left_moter, right_moter):
@@ -47,26 +58,22 @@ class Turn(object):
         self.mright.reset()
         self.mleft.reset()
         self.turn = True
-        thread.start_new(self._check_turn, (self.mleft, degrees * 6,))
-        time.sleep(0.1)
         self.mleft.run_forever(speed, regulation_mode=True)
+        self._check_turn(self.mleft, degrees * 6,)
 
-
-    def left(self, degrees, speed=200):
+    def leftturn(self, degrees, speed=200):
         self.mright.reset()
         self.mleft.reset()
         self.turn = True
-        thread.start_new(self._check_turn, (self.mright, degrees * 6,))
-        time.sleep(0.1)
         self.mright.run_forever(speed, regulation_mode=True)
+        self._check_turn(self.mright, degrees * 6,)
 
 
     def _check_turn(self, m, degrees):
-        run = True
-        while run:
-            print [m.position], [degrees]
+        while self.turn:
+            print degrees, m.position
             if m.position >= degrees:
-                run = False
+                self.turn = False
             time.sleep(0.1)
         m.stop()
 
@@ -78,8 +85,6 @@ def test():
     M2 = EVEMotor('B')
     M2.run_forever(200, regulation_mode=True)
 
-    M1.start()
-    M2.start()
     time.sleep(5)
     M1.stop()
     M2.stop()

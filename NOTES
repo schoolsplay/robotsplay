@@ -5,6 +5,7 @@ Settings -> project structure -> add content root.
 Install pycharm plugin: Source synchronizer
 
 Things todo on your btick in addition to the stuff mentioned in th ev3 wiki
+- sudo chmod 777 /dev/input/event0 (to get keys working in python as regular user)
 - dpkg-reconfigure tzdata to set the time and date to your locale
 - Create regular user:
   # adduser user
